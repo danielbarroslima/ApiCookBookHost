@@ -11,8 +11,18 @@ class Api::V1::RecipesController < Api::V1::ApiController
   		render json: @recipe, status: :created 
   	else 
   		render json: {message: 'Falha ao criar receita'}, status: :precondition_failed		
-  	end	
-  		
+  	end	 		
+  end
+
+  def update
+    @recipe = Recipe.find(params[:id])
+    if @recipe.update(recipe_params)
+      render json: @recipe , status: :accepted
+    else
+      render json: {message:@recipe.errors.full_messages} , status: :precondition_failed
+    end 
+  rescue 
+    render json: {message:'Receita não encontrada'}, status: :not_found
   end
 
   private
