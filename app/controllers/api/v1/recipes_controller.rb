@@ -1,15 +1,11 @@
 class Api::V1::RecipesController < Api::V1::ApiController
 	
-  def show
-  	@recipe = Recipe.find(params[:id])
-  end
-
   def create
   	@recipe = Recipe.new(recipe_params)  
   	if @recipe.save
   		render json: @recipe, status: :created 
-  	# else 
-  	# 	render json: {'Falha', status}		
+  	else 
+  		render json: {message: 'Falha ao criar receita'}, status: :precondition_failed		
   	end	
   		
   end
