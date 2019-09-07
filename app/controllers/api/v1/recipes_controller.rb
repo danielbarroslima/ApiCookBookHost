@@ -25,6 +25,14 @@ class Api::V1::RecipesController < Api::V1::ApiController
     render json: {message:'Receita não encontrada'}, status: :not_found
   end
 
+  def destroy
+    @recipe = Recipe.find(params[:id])
+      @recipe.destroy
+      render json: {message: 'Deletado com sucesso'}, status: :accepted    
+  rescue 
+    render json:{message:'Receita não encontrada'}, status: :not_found
+  end
+
   private
   	def recipe_params
   		params.require(:recipe).permit(:title, :recipe_type, :cuisine, :cook_method, :cook_time, :ingredients, :difficulty)	
